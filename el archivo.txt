@@ -1,0 +1,49 @@
+la 3
+mkdir hola
+cd hola
+touch grecia.txt
+vi grecia.txt
+cat grecia.txt
+chmod 700 grecia.txt
+ls -l
+ls -l grecia.txt
+chmod 770 grecia.txt
+ls -l grecia.txt
+cd ..
+mkdir video11
+cp hola/grecia.txt/video11/
+ls -l video11/
+cp hola/grecia.txt video11/
+ls -l video11
+rm -rf hola
+
+la 2 
+ip link
+nmcli device statu
+sudo nmcli connection modify ens160 ipv4.method auto
+sudo nmcli connection down ens160
+sudo nmclip connection up ens160
+sudo nmcli connection up ens160
+ip a
+sudo nmcli connection modify ens160 \
+ipv4.mothod manual \
+ipv4.address 192.168.1.100/24 \
+ipv4.geteway 192.168.1.1
+sudo nmcli connection down ens160
+sudo nmcli connetion up ens160
+
+la 4 
+mkdir hola
+cd hola
+touch grecia.txt
+vi grecia.txt
+cat grecia.txt
+chmod 700 grecia.txt
+ls -l
+ls -l grecia.txt
+chmod 770 grecia.txt
+ls -l grecia.txt
+cd ..
+mkdir video11
+cp hola/grecia.txt/video11/
+ls -l video11/
