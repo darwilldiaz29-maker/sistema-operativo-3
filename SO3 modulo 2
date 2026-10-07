@@ -1,0 +1,34 @@
+Práctica 1 
+
+# Actualizar sistema
+sudo su -
+dnf update -y
+dnf upgrade -y
+
+# Ver repositorios
+dnf repolist
+ls -l /etc/yum.repos.d/
+
+# Buscar e instalar
+dnf search monitor
+dnf info bashtop
+dnf install -y bashtop
+bashtop
+
+# Desinstalar y limpiar
+dnf remove -y bashtop
+dnf autoremove -y
+dnf clean all
+practica 2
+sudo su -
+
+crontab -e
+crontab -l
+
+systemctl start atd
+systemctl enable atd
+at now + 1 minute
+  rm -rf /tmp/* 
+  ls /tmp
+atq
+ls /tmp
