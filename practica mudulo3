@@ -1,0 +1,35 @@
+[practicas modulo3.txt](https://github.com/user-attachments/files/33581586/practicas.modulo3.txt)
+Práctica 1
+[5:55 p.m., 16/10/2026] DDiaz: sudo su -
+nano /etc/default/grub
+grub2-mkconfig -o /boot/grub2/grub.cfg
+cat /etc/default/grub | grep TIMEOUT
+[5:55 p.m., 16/10/2026] DDiaz: mount -o remount,rw /sysroot
+chroot /sysroot
+passwd root
+touch /.autorelabel
+exit
+exit
+
+practica2
+nano ~/Escritorio/backup.sh
+nano ~/Escritorio/redinfo.sh
+chmod +x ~/Escritorio/*.sh
+bash ~/Escritorio/backup.sh
+bash ~/Escritorio/redinfo.sh
+ls -l ~/Escritorio/
+[5:56 p.m., 16/10/2026] DDiaz:
+
+ Practica3
+[5:56 p.m., 16/10/2026] DDiaz: ip a
+systemctl start sshd
+systemctl enable sshd
+systemctl status sshd
+mkdir -p ~/.ssh
+cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+[5:56 p.m., 16/10/2026] DDiaz: ping 192.168.1.9
+ssh-keygen -t rsa -b 2048
+scp C:\Users\TuUsuario\.ssh\id_rsa.pub darwill@192.168.1.9:/home/darwill/
+ssh darwill@192.168.1.9
