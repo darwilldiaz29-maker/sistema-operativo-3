@@ -1,0 +1,25 @@
+modulo 4
+ Práctica 1:
+ sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+ echo "<h1>Hola Mundo</h1>" | sudo tee /var/www/html/index.html
+Práctica 2:
+sudo dnf install postfix -y
+sudo nano /etc/postfix/main.cf
+ sudo nano /etc/postfix/sasl_passwd
+ sudo postmap /etc/postfix/sasl_passwd
+sudo postmap lmdb:/etc/postfix/sasl_passwd
+ sudo systemctl restart postfix
+sudo systemctl enable postfix
+echo -e "Nombre: Darwill Santiago Diaz Brea\nMatricula: 20260857" | mail -s "MambruSeFueALaGuerra" os3conadrian@gmail.com
+ sudo tail -f /var/log/maillog
+ Práctica 3
+ sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm -y
+ sudo dnf install cups cups-pdf -y
+ sudo systemctl enable --now cups
+ sudo cupsctl --remote-admin --remote-any --share-printers
+sudo systemctl restart cups
+ip a
+ ls -l /var/spool/cups-pdf/
+ls -l /var/spool/cups-pdf/ANONYMOUS/
