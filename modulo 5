@@ -1,0 +1,51 @@
+
+ PRÁCTICA 1: Sincronización con Rsync
+mkdir ~/carpeta_prueba
+cd ~/carpeta_prueba
+touch archivo{1..100}.txt
+rsync -avz ~/carpeta_prueba usuario@servidor2:/home/usuario/
+nano ~/sync_script.sh
+chmod +x ~/sync_script.sh
+crontab -e
+touch ~/archivo_servidor_primario.txt
+ls /home/usuario/carpeta_prueba 
+
+systemctl status sshd
+ping ip_del_servidor2
+rsync -avz --delete ~/carpeta_prueba usuario@servidor2:/home/usuario/
+
+ PRÁCTICA 2: Pacemaker + Corosync
+
+sudo dnf install pacemaker pcs corosync -y
+sudo systemctl enable --now pcsd
+sudo passwd hacluster
+sudo pcs host auth servidor1 servidor2 -u hacluster -p tu_contraseña
+sudo pcs cluster setup --name mi-cluster servidor1 servidor2
+sudo pcs cluster start --all
+sudo pcs cluster enable --all
+sudo pcs property set stonith-enabled=false
+sudo pcs resource create virtual-ip ocf:heartbeat:IPaddr2 ip=192.168.1.100 cidr_netmask=24 op monitor interval=30s
+sudo pcs status
+ping 192.168.1.100
+sudo reboot
+sudo pcs status
+sudo pcs status corosync
+sudo systemctl restart corosync
+sudo pcs cluster stop --all && sudo pcs cluster start --all
+
+ PRÁCTICA 3: KeepAlived HTTP
+sudo dnf install httpd -y
+sudo systemctl enable --now httpd
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --reload
+echo "<h1>Hola, soy el Servidor1</h1>" | sudo tee /var/www/html/index.html
+sudo dnf install keepalived -y
+sudo nano /etc/keepalived/keepalived.conf
+sudo systemctl enable --now keepalived
+sudo systemctl status keepalived
+ip a
+sudo systemctl stop httpd
+sudo systemctl start httpd
+sudo journalctl -xeu keepalived.service
+ip a
+sudo systemctl restart keepalived
