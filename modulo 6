@@ -1,0 +1,97 @@
+practica 1
+
+
+
+
+gpg --version
+
+mkdir ~/practica_gpg
+cd ~/practica_gpg
+
+
+nano mensaje.txt
+
+
+gpg -c mensaje.txt
+
+
+ls -la
+cat mensaje.txt.gpg
+
+gpg mensaje.txt.gpg
+
+
+practica 2
+
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+sudo iptables -A INPUT -p tcp --dport 80 -j DROP
+sudo iptables -A INPUT -p tcp --dport 21 -j DROP
+sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+
+sudo iptables -L -n
+
+sudo iptables -F
+sudo iptables -L -n
+
+sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --add-service=ftp --permanent
+sudo firewall-cmd --add-service=ssh --permanent
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --remove-service=http --permanent
+sudo firewall-cmd --remove-service=ftp --permanent
+sudo firewall-cmd --remove-service=ssh --permanent
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --list-services
+
+sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --add-service=ftp --permanent
+sudo firewall-cmd --add-service=ssh --permanent
+sudo firewall-cmd --reload
+
+practica 3
+
+sudo dnf install snort -y
+
+snort -V
+
+sudo mkdir -p /etc/snort/rules
+sudo nano /etc/snort/rules/mis_reglas.rules
+alert icmp any any -> $HOME_NET any (msg:"ICMP Ping detectado"; sid:1000001; rev:1;)
+alert tcp any any -> $HOME_NET 21 (msg:"Tráfico FTP detectado"; sid:1000002; rev:1;)
+alert tcp any any -> $HOME_NET 22 (msg:"Tráfico SSH detectado"; sid:1000003; rev:1;)
+alert tcp any any -> $HOME_NET 80 (msg:"Tráfico HTTP detectado"; sid:1000004; rev:1;)
+# Ejecutar Snort en modo consola
+sudo snort -A console -c /etc/snort/snort.conf -i ens33
+
+ping -c 3 192.168.109.131
+ftp 192.168.109.131
+ssh ddiaz29@192.168.109.131
+curl http://192.168.109.131
+
+
+practica 4
+
+sudo dnf install google-authenticator -y
+
+google-authenticator
+
+sudo nano /etc/pam.d/sshd
+# Agregar al inicio:
+# auth required pam_google_authenticator.so
+
+sudo nano /etc/ssh/sshd_config
+# Cambiar:
+# ChallengeResponseAuthentication yes
+
+sudo systemctl restart sshd
+sudo systemctl status sshd
+
+sudo firewall-cmd --add-service=ssh --permanent
+sudo firewall-cmd --reload
+
+ssh ddiaz29@192.168.109.131
