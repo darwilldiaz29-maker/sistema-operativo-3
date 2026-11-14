@@ -1,0 +1,52 @@
+
+====================================================
+PRÁCTICA 1
+====================================================
+
+mkdir -p /OS3
+cd /OS3
+for i in {1..100}; do touch "Adrian_$i.txt"; done
+ls -l /OS3
+chmod 755 /OS3
+chown nobody:nobody /OS3
+echo "/OS3    *(rw,sync,no_root_squash,no_all_squash)" > /etc/exports
+exportfs -r
+exportfs -v
+systemctl enable --now nfs-server
+systemctl is-active nfs-server
+firewall-cmd --permanent --add-service=nfs
+firewall-cmd --reload
+sudo mkdir -p /mnt/NFS_Adrian
+sudo mount 192.168.1.32:/OS3 /mnt/NFS_Adrian
+ls -l /mnt/NFS_Adrian
+sudo mount -a
+sudo reboot
+ls -l /mnt/NFS_Adrian
+
+====================================================
+PRÁCTICA 2
+====================================================
+
+date
+id
+sudo dnf install samba
+sudo systemctl enable smb
+sudo systemctl start smb
+sudo systemctl status smb
+sudo groupadd samba-grupo
+sudo usermod -aG samba-grupo Wilmin
+sudo mkdir -p /samba/compartida
+sudo chown -R root:samba-grupo /samba/compartida
+sudo chmod 2770 /samba/compartida
+ls -ld /samba/compartida
+ls -Z /samba/compartida
+sudo semanage fcontext -a -t samba_share_t "/samba/compartida(/.*)?"
+sudo restorecon -Rvv /samba/compartida
+cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+sudo nano /etc/samba/smb.conf
+sudo smbpasswd -a Wilmin
+sudo firewall-cmd --permanent --add-service=samba
+sudo firewall-cmd --reload
+smbclient -L localhost -U Wilmin
+smbstatus
+
